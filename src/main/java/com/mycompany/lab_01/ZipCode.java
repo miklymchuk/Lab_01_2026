@@ -23,16 +23,24 @@ public class ZipCode {
             System.out.println("The barcode is invalid, it is not in a multiple of 5 binary digits.");
             return;
         }
+        
         if (barcode.charAt(0) != '1' || barcode.charAt(barcode.length() - 1) != '1') {
             System.out.println("The barcode is missing a 1 at the start or end.");
             return;
         }
+        boolean check = false;
+        
         for (int a = 0; a < barcode.length() - 1; a++) {
             if (barcode.charAt(a) != '0' && barcode.charAt(a) != '1') {
                 System.out.println("Character" + barcode.charAt(a) + "must be '0' or '1'.");
-                return;
-            }          
+                check = true;
+            }     
+            
+        }       
+        if (check == true) {
+            return;
         }
+        
         int Zip = parseBarCode(barcode);
         if (Zip == -1) {
             System.out.println("Invalid sequence.");
