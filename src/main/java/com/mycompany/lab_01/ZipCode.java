@@ -44,7 +44,7 @@ public class ZipCode {
     public String GetBarCode() {
         int code2 = Zip;
         String barcode = "";
-        while (code2 > 0) {
+        for (int a = 0; a < 5; a++) {
             switch(code2 % 10) {
                 case 0 -> barcode = "11000" + barcode;
                 case 1 -> barcode = "00011" + barcode;
