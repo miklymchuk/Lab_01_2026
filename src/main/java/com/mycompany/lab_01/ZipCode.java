@@ -17,6 +17,7 @@ public class ZipCode {
         }
         this.code = code;
     }
+    
     public ZipCode(String barcode) {
         if (barcode.length() % 5 != 2) {
             System.out.println("The barcode is invalid, it is not in a multiple of 5 binary digits.");
@@ -35,28 +36,47 @@ public class ZipCode {
         }
         barcode = barcode.substring(1,barcode.length() - 1);
         int code = 0;
-        while (barcode.length() > 0 && code != -1) {
+        while (barcode.length() > 0) {
             String sequence = barcode.substring(0, 5);
             code*=10;
             switch (sequence) {
-                case "11000":;
-                case "00011":code+=1;return;
-                case "00101":code+=2;return;
-                case "00110":code+=3;return;
-                case "01001":code+=4;return;
-                case "01010":code+=5;return;
-                case "01100":code+=6;return;
-                case "10001":code+=7;return;
-                case "10010":code+=8;return;
-                case "10100":code+=9;return;
-                default:System.out.println("Invalid sequence.");code = -1;
+                case "11000" -> {}
+                case "00011" -> code+=1;
+                case "00101" -> code+=2;
+                case "00110" -> code+=3;
+                case "01001" -> code+=4;
+                case "01010" -> code+=5;
+                case "01100" -> code+=6;
+                case "10001" -> code+=7;
+                case "10010" -> code+=8;
+                case "10100" -> code+=9;
+                default -> {System.out.println("Invalid sequence."); return;}
             }
             barcode = barcode.substring(5);
         }
-        if (code == -1) {
-            return;
-        }
         this.code = code;
+    }
+    
+    public String getBarCode() {
+        int code2 = code;
+        String barcode = "";
+        while (code2 > 0) {
+            switch(code2 % 10) {
+                case 0 -> barcode = "11000" + barcode;
+                case 1 -> barcode = "00011" + barcode;
+                case 2 -> barcode = "00101" + barcode;
+                case 3 -> barcode = "00110" + barcode;
+                case 4 -> barcode = "01001" + barcode;
+                case 5 -> barcode = "01010" + barcode;
+                case 6 -> barcode = "01100" + barcode;
+                case 7 -> barcode = "10001" + barcode;
+                case 8 -> barcode = "10010" + barcode;
+                default -> barcode = "10100" + barcode;
+            }
+            code2/=10;
+        }
+        barcode = "1" + barcode + "1";
+        return barcode;
     }
 }
     
