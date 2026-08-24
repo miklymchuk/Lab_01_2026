@@ -9,13 +9,13 @@ package com.mycompany.lab_01;
  * @author 6312398
  */
 public class ZipCode {
-    int code = 0;
-    public ZipCode(int code) {
-        if (code > 99999) {
+    int Zip = 0;
+    public ZipCode(int Zip) {
+        if (Zip > 99999) {
             System.out.println("The integer has too many digits.");
             return;
         }
-        this.code = code;
+        this.Zip = Zip;
     }
     
     public ZipCode(String barcode) {
@@ -31,34 +31,18 @@ public class ZipCode {
             if (barcode.charAt(a) != '0' && barcode.charAt(a) != '1') {
                 System.out.println("Character" + barcode.charAt(a) + "must be '0' or '1'.");
                 return;
-            }
-            
+            }          
         }
-        barcode = barcode.substring(1,barcode.length() - 1);
-        int code = 0;
-        while (barcode.length() > 0) {
-            String sequence = barcode.substring(0, 5);
-            code*=10;
-            switch (sequence) {
-                case "11000" -> {}
-                case "00011" -> code+=1;
-                case "00101" -> code+=2;
-                case "00110" -> code+=3;
-                case "01001" -> code+=4;
-                case "01010" -> code+=5;
-                case "01100" -> code+=6;
-                case "10001" -> code+=7;
-                case "10010" -> code+=8;
-                case "10100" -> code+=9;
-                default -> {System.out.println("Invalid sequence."); return;}
-            }
-            barcode = barcode.substring(5);
+        int Zip = parseBarCode(barcode);
+        if (Zip == -1) {
+            System.out.println("Invalid sequence.");
+            return;
         }
-        this.code = code;
+        this.Zip = Zip;
     }
     
-    public String getBarCode() {
-        int code2 = code;
+    public String GetBarCode() {
+        int code2 = Zip;
         String barcode = "";
         while (code2 > 0) {
             switch(code2 % 10) {
@@ -78,5 +62,32 @@ public class ZipCode {
         barcode = "1" + barcode + "1";
         return barcode;
     }
+    
+    private int parseBarCode(String barcode) {
+        
+        barcode = barcode.substring(1,barcode.length() - 1);
+        int code = 0;
+        while (barcode.length() > 0 && code != -1) {
+            String sequence = barcode.substring(0, 5);
+            code*=10;
+            switch (sequence) {
+                case "11000" -> {}
+                case "00011" -> code+=1;
+                case "00101" -> code+=2;
+                case "00110" -> code+=3;
+                case "01001" -> code+=4;
+                case "01010" -> code+=5;
+                case "01100" -> code+=6;
+                case "10001" -> code+=7;
+                case "10010" -> code+=8;
+                case "10100" -> code+=9;
+                default -> code = -1;
+            }
+            barcode = barcode.substring(5);
+        }
+        return code;
+    }
 }
+
+
     
