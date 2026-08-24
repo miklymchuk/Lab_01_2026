@@ -19,8 +19,8 @@ public class ZipCode {
     }
     
     public ZipCode(String barcode) {
-        if (barcode.length() % 5 != 2) {
-            System.out.println("The barcode is invalid, it is not in a multiple of 5 binary digits.");
+        if (barcode.length() != 27) {
+            System.out.println("The barcode is invalid, it is not the right length.");
             return;
         }
         
